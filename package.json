@@ -1,0 +1,23 @@
+{
+  "name": "desafio_jera",
+  "version": "1.0.0",
+  "description": "Desafio da Jera para a criação de uma aplicação Web ou Mobile para o armazenamento de um lista de filmes que o usuário gostaria de assistir. Utilizando a API do TheMovieDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rysgothal/Desafio_Jera.git"
+  },
+  "author": "Lucas Frade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Rysgothal/Desafio_Jera/issues"
+  },
+  "homepage": "https://github.com/Rysgothal/Desafio_Jera#readme",
+  "dependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
