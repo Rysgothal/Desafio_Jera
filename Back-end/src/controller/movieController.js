@@ -163,6 +163,55 @@ class moviesController {
                 }).end();
             });
     };
+
+    userLogin = async (req, res) => {
+        const login = {
+            email: req.body.email,
+            password: getHashMD5(req.body.password)
+        };
+
+        if (!(await this.checkEmailAlreadyExists(login.email))) {
+            console.log("Email não cadastrado...");
+
+            res.status(404).json({
+                message: "Email não cadastrado...",
+                code: 404
+            }).end();
+
+            return;
+        };
+        
+        this.accountTable
+            .findOne({ where: { email: login.email } })
+            .then((account) => {
+                if (account.password !== login.password) {
+                    console.log("Senha incorreta...");
+
+                    res.status(404).json({
+                        message: "Senha incorreta...",
+                        code: 404,
+                        account: account
+                    }).end();
+                } else {
+                    console.log("Login efetuado com sucesso...");
+
+                    res.status(200).json({
+                        message: "Login efetuado com sucesso...",
+                        code: 200,
+                        account: account
+                    }).end();
+                };
+            })
+            .catch((error) => {
+                console.log("Inconsistência ao efetuar login...", error);
+
+                res.status(404).json({
+                    message: "Inconsistência ao efetuar login...",
+                    code: 404,
+                    error: error
+                }).end();
+            }); 
+    };
 };
 
 module.exports = {
