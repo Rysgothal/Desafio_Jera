@@ -17,8 +17,6 @@ class moviesController {
     getReqBodyToAccountJSON = (body) => {
         const accountJSON = {
             nameUser: body.nameUser,
-            // profileName: body.profileName,
-            // userCpf: body.userCpf,
             email: body.email,
             password: getHashMD5(body.password),
             birthDate: body.birthDate,

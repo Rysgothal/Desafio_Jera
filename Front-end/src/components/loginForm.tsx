@@ -1,4 +1,6 @@
-"use client";
+
+'use client';
+import Link from 'next/link';
 
 export default function LoginForm() {
     async function login(e: React.FormEvent<HTMLFormElement>) {
@@ -20,11 +22,12 @@ export default function LoginForm() {
 
         if (response.ok) {
             console.log(data);
+            // window.location.href = "registerForm.tsx";
         } else {
             console.error(data);
         };
     };
-
+    
     return (
         <form 
             onSubmit={login}
@@ -43,7 +46,13 @@ export default function LoginForm() {
                 placeholder="senha"
                 className="input input-primary w-full"
             />
-            <button className="btn btn-primary w-full" type="submit">Entrar</button>
+            <button className="btn btn-primary w-full bg-emerald-400" type="submit">Entrar</button>
+
+            <span className="text-xs text-zinc-500">Não possui conta?
+                <strong className="text-zinc-700">
+                    <Link href="/register"> Registrar-se</Link>
+                </strong>
+            </span>
         </form>
     );
 }
