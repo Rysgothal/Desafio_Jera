@@ -2,7 +2,7 @@
 'use client';
 import Link from 'next/link';
 
-export default function LoginForm() {
+export default function loginForm() {
     async function login(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const userLogin = {

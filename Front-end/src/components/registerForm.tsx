@@ -24,7 +24,7 @@ export default function registerForm() {
 
         if (response.ok) {
             console.log(data);
-            // window.location.href = "/path/to/another/page";
+            window.location.href = "home";
         } else {
             console.error(data);
         };
@@ -56,7 +56,7 @@ export default function registerForm() {
             />
             <input 
                 name="birthDate"
-                type="birthDate"
+                type="date"
                 placeholder="Data de Nascimento"
                 className="input input-primary w-full"
             />
