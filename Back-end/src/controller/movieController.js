@@ -299,11 +299,27 @@ class moviesController {
         const idAccount = req.params.idAccount;
 
         this.profileTable
-            .findOne({ where: { id: idProfile, idAccount: idAccount} })
-            .then((profile) => {
-                console.log("Perfil listado com sucesso...");
+            .findOne({ where: { idAccount: idAccount} })
+            .then((account) => {
+                if (account === null) {
+                    console.log("Conta não encontrada...");
 
-                res.status(200).json(profile).end();
+                    res.status(404).json({
+                        message: "Conta não encontrada...",
+                        code: 404
+                    }).end();
+
+                    return;
+                };
+
+                const profile = account.profiles[idProfile];
+                console.log("Perfil encontrado com sucesso...", profile);
+
+                res.status(200).json({
+                    message: "Perfil encontrado com sucesso...",
+                    code: 200,
+                    profile: profile
+                }).end();
             })
             .catch((error) => {
                 console.log("Inconsistência ao listar perfil...", error);
