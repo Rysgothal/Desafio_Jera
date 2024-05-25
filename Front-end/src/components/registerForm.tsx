@@ -15,7 +15,7 @@ export default function RegisterForm() {
             birthDate: e.currentTarget.birthDate.value
         };
 
-        const response = await fetch("http://52.15.70.23:3050/account/create", {
+        const response = await fetch("http://18.219.160.242:3050/account/create", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"
@@ -27,7 +27,7 @@ export default function RegisterForm() {
 
         if (response.ok) {
             console.log(data);
-            router.push('/home');
+            router.push(`/profileSelect?id=${data.idAccount}`);
         } else {
             console.error(data);
         };
