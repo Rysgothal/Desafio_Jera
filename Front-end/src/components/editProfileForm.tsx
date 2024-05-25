@@ -1,33 +1,27 @@
 'use client';
 import { useRouter } from "next/navigation";
 
-export default function AddProfileForm () {
+export default function EditProfileForm () {
     const router = useRouter();
 
-    async function addProfile(e: React.FormEvent<HTMLFormElement>) {
+    async function editProfile(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const params = new URLSearchParams(window.location.search);
-        const id = params.get("id");
+        const editedProfile = params.get("json");
 
-        const newProfile = {
-            profileName: e.currentTarget.profileName.value,
-            idAccount: id,
-            mainProfile: e.currentTarget.mainProfile.checked
-        };
-
-        const response = await fetch("http://18.219.160.242:3050/profile/create", {
+        const response = await fetch("http://18.219.160.242:3050/profile/edit", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"
             },
-            body: JSON.stringify(newProfile)
+            body: JSON.stringify(editedProfile)
         });
 
         const data = await response.json();
 
         if (response.ok) {
             console.log(data);
-            router.push(`profile-select?id=${id}`);
+            router.push(`select-profile?id=${data.idAccount}`);
         } else {
             alert(data.message);
         };
@@ -35,7 +29,7 @@ export default function AddProfileForm () {
   
     return (
         <form
-            onSubmit={addProfile} 
+            onSubmit={editProfile} 
             className="bg-white p-6 rounded-lg">
             <div className="flex gap-2">
                 <input type="text" placeholder="Nome do perfil" name="profileName"/>
@@ -44,7 +38,7 @@ export default function AddProfileForm () {
             </div>
             <div className="w-96 max-w-full flex flex-col py-2">
                 <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    Adicionar
+                    Confirmar
                 </button>
             </div>
         </form>

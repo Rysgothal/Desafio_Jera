@@ -246,6 +246,75 @@ class moviesController {
             }).end();
         });
     };
+
+    editProfile = async (req, res) => {
+        const editedProfile = this.getReqBodyToProfileJSON(req.body);
+
+        if (!this.checkAccountAlreadyExistis(editedProfile.idAccount)) {
+            console.log("A conta não existe...");
+
+            res.status(404).json({
+                message: "A conta não existe...",
+                code: 404
+            }).end();
+
+            return;
+        };
+
+        if (editedProfile.mainProfile && await this.profileTable.findOne({ where: { mainProfile: true } }) !== null) {
+            console.log("Perfil principal já existe...");
+
+            res.status(404).json({
+                message: "Perfil principal já existe...",
+                code: 404
+            }).end();
+
+            return;
+        };
+
+        this.profileTable
+            .update({ idAccount: editedProfile.idAccount }, editedProfile)
+            .then((profile) => {
+                console.log("Perfil editado com sucesso...", profile);
+
+                res.status(200).json({
+                    message: "Perfil editado com sucesso...",
+                    code: 200,
+                    profile: profile
+                }).end();
+            })
+            .catch((error) => {
+                console.log("Inconsistência ao editar perfil...", error);
+
+                res.status(404).json({
+                    message: "Inconsistência ao editar perfil...",
+                    code: 404,
+                    error: error
+                }).end();
+            });
+    };
+
+    getInfoProfile = async (req, res) => {
+        const idProfile = req.params.idProfile;
+        const idAccount = req.params.idAccount;
+
+        this.profileTable
+            .findOne({ where: { id: idProfile, idAccount: idAccount} })
+            .then((profile) => {
+                console.log("Perfil listado com sucesso...");
+
+                res.status(200).json(profile).end();
+            })
+            .catch((error) => {
+                console.log("Inconsistência ao listar perfil...", error);
+
+                res.status(404).json({
+                    message: "Inconsistência ao listar perfil...",
+                    code: 404,
+                    error: error
+                }).end();
+            });
+    };
 };
 
 module.exports = {
