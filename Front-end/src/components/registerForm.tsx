@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 export default function registerForm() {
-    const router = useRouter();
+    const Router = useRouter();
     
     async function register(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -27,7 +27,7 @@ export default function registerForm() {
 
         if (response.ok) {
             console.log(data);
-            router.push('/home');
+            Router.push('/home');
         } else {
             console.error(data);
         };
