@@ -1,8 +1,10 @@
 
 'use client';
 import Link from 'next/link';
+import { useRouter } from 'next/router'; 
 
 export default function loginForm() {
+    const router = useRouter();
     async function login(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const userLogin = {
@@ -10,7 +12,7 @@ export default function loginForm() {
             password: e.currentTarget.password.value
         };
 
-        const response = await fetch("http://localhost:3050/account/login", {
+        const response = await fetch("http://52.15.70.23:3050/account/login", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"
@@ -22,7 +24,7 @@ export default function loginForm() {
 
         if (response.ok) {
             console.log(data);
-            // window.location.href = "registerForm.tsx";
+            router.push('/home');
         } else {
             console.error(data);
         };
@@ -37,13 +39,13 @@ export default function loginForm() {
             <input 
                 name="email"
                 type="email"
-                placeholder="email"
+                placeholder="  Email"
                 className="input input-primary w-full"
             />
             <input 
                 name="password"
                 type="password"
-                placeholder="senha"
+                placeholder="  Senha"
                 className="input input-primary w-full"
             />
             <button className="btn btn-primary w-full bg-emerald-400" type="submit">Entrar</button>

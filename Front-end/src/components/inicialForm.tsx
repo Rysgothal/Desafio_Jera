@@ -8,7 +8,7 @@ export default function inicialForm() {
                     <label className="text-sm">
                         Bem-vindo ao 
                             <strong className='p-1 text-blue-800'> 
-                                DB Movie Room
+                                Desafio Jera
                             </strong>
                         </label>
                 </div>

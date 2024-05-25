@@ -1,8 +1,10 @@
 
 "use client";
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 export default function registerForm() {
+    const router = useRouter();
     async function register(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const userLogin = {
@@ -12,7 +14,7 @@ export default function registerForm() {
             birthDate: e.currentTarget.birthDate.value
         };
 
-        const response = await fetch("http://localhost:3050/account/create", {
+        const response = await fetch("http://52.15.70.23:3050/account/create", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"
@@ -24,7 +26,7 @@ export default function registerForm() {
 
         if (response.ok) {
             console.log(data);
-            window.location.href = "home";
+            router.push('/home');
         } else {
             console.error(data);
         };
@@ -36,28 +38,32 @@ export default function registerForm() {
             className="bg-white p-6 rounded-lg w-96 max-w-full flex justify-center items-center flex-col gap-3"
         > 
             <h2 className="text-2xl font-bold mb-3">Criar uma conta</h2>
+            <label htmlFor="nameUser" className="text-sm">Nome</label>
             <input 
                 name="nameUser"
                 type="name"
-                placeholder="Nome"
+                placeholder="  Nome"
                 className="input input-primary w-full"
             />
+            <label htmlFor="email" className="text-sm">Email</label>
             <input 
                 name="email"
                 type="email"
-                placeholder="Email"
+                placeholder="  Email"
                 className="input input-primary w-full"
             />
+            <label htmlFor="password" className="text-sm">Senha</label>
             <input 
                 name="password"
                 type="password"
-                placeholder="Senha"
+                placeholder="  Senha"
                 className="input input-primary w-full"
             />
+            <label htmlFor="birthDate" className="text-sm">Data de Nascimento</label>
             <input 
                 name="birthDate"
                 type="date"
-                placeholder="Data de Nascimento"
+                placeholder="  Data de Nascimento"
                 className="input input-primary w-full"
             />
             <button className="btn btn-primary w-full bg-emerald-400" type="submit">Cadastrar</button>
