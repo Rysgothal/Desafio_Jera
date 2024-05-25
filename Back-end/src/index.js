@@ -30,5 +30,5 @@ https.createServer({
     cert: fs.readFileSync('./src/SSL/code.crt'),
     key: fs.readFileSync('./src/SSL/code.key') 
 }, app).listen(3001, () => {
-    console.log(`API online => https://52.15.70.23:${port}`);
+    console.log(`API online => https://52.15.70.23:${3001}`);
 });
