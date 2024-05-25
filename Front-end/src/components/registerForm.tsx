@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 
 export default function registerForm() {
     const router = useRouter();
+    
     async function register(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const userLogin = {
