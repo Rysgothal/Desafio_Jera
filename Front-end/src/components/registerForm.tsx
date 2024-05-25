@@ -27,7 +27,7 @@ export default function RegisterForm() {
 
         if (response.ok) {
             console.log(data);
-            router.push('/home');
+            router.push(`/profileSelect?id=${data.idAccount}`);
         } else {
             console.error(data);
         };

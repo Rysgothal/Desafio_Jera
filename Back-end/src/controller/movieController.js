@@ -72,7 +72,18 @@ class moviesController {
 
             return;
         };
-        
+
+        if (await this.profileTable.count({ where: { idAccount: newProfile.idAccount } }) >= 4) {
+            console.log("Limite máximo de perfis atingido...");
+
+            res.status(404).json({
+                message: "Limite máximo de perfis atingido...",
+                code: 404
+            }).end();
+
+            return;
+        };
+
         if ( newProfile.mainProfile && await this.profileTable.findOne({ where: { mainProfile: true } }) !== null) {
             console.log("Perfil principal já existe...");
 
@@ -82,7 +93,7 @@ class moviesController {
             }).end();
 
             return;
-        }
+        };
 
         this.profileTable
             .save(newProfile)
@@ -209,6 +220,31 @@ class moviesController {
                     error: error
                 }).end();
             }); 
+    };
+
+    getListProfiles = async (req, res) => {
+        const idAccount = req.params.idAccount;
+
+        this.profileTable
+            .find({ where: { idAccount: idAccount } })
+            .then((profiles) => {
+            console.log("Perfis listados com sucesso...");
+
+            res.status(200).json({
+                message: "Perfis listados com sucesso...",
+                code: 200,
+                profiles: profiles
+            }).end();
+        })
+        .catch((error) => {
+            console.log("Inconsistência ao listar perfis...", error);
+
+            res.status(404).json({
+                message: "Inconsistência ao listar perfis...",
+                code: 404,
+                error: error
+            }).end();
+        });
     };
 };
 
