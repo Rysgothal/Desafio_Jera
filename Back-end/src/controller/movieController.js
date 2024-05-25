@@ -43,7 +43,7 @@ class moviesController {
 
     getReqBodyToProfileJSON = (body) => {
         const profileJSON = {
-            profileName: body.nameUser,
+            profileName: body.profileName,
             idAccount: body.idAccount,
             mainProfile: body.mainProfile,
         };

@@ -24,7 +24,8 @@ export default function LoginForm() {
 
         if (response.ok) {
             console.log(data);
-            router.push(`/profileSelect?id=${data.idAccount}`);
+            const account = data.account;
+            router.push(`/profile-select?id=${account.id}`);
         } else {
             console.error(data);
         };
