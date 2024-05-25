@@ -15,7 +15,7 @@ export default function RegisterForm() {
             birthDate: e.currentTarget.birthDate.value
         };
 
-        const response = await fetch("https://52.15.70.23:3050/account/create", {
+        const response = await fetch("http://52.15.70.23:3050/account/create", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"
