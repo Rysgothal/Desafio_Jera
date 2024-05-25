@@ -19,6 +19,6 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, async () => {
-    console.log(`API online => http://52.15.70.23:${port}`);
+    console.log(`API online => http://18.219.160.242:${port}`);
     await database().init();
 });
