@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'; 
 
-export default function loginForm() {
-    const Router = useRouter();
+export default function LoginForm() {
+    const router = useRouter();
     async function login(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const userLogin = {
@@ -24,7 +24,7 @@ export default function loginForm() {
 
         if (response.ok) {
             console.log(data);
-            Router.push('/home');
+            router.push('/home');
         } else {
             console.error(data);
         };

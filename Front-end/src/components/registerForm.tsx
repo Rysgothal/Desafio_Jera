@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-export default function registerForm() {
-    const Router = useRouter();
+export default function RegisterForm() {
+    const router = useRouter();
     
     async function register(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -27,7 +27,7 @@ export default function registerForm() {
 
         if (response.ok) {
             console.log(data);
-            Router.push('/home');
+            router.push('/home');
         } else {
             console.error(data);
         };
