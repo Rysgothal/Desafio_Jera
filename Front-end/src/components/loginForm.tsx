@@ -12,7 +12,7 @@ export default function LoginForm() {
             password: e.currentTarget.password.value
         };
 
-        const response = await fetch("https://52.15.70.23:3001/account/login", {
+        const response = await fetch("http://52.15.70.23:3050/account/login", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"
