@@ -5,9 +5,8 @@ import { useRouter } from 'next/navigation';
 
 const getProfileInfo = async (idAccount: Number, idProfile: Number) => {
     const response = await fetch(`http://18.219.160.242:3050/${idAccount}/${idProfile}`);
-    
     const data = await response.json();
-    
+
     if (response.ok) {
         console.log(data);
     } else {
@@ -49,7 +48,7 @@ export default function ProfileSelectForm () {
     }, [idAccount]);
 
     const handleProfileChange = ((e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedProfile(e.target.selectedIndex);
+        setSelectedProfile(Number(e.target.value));
     });
 
     return (
@@ -58,6 +57,7 @@ export default function ProfileSelectForm () {
             <select 
                 name="profile" 
                 id="profile" 
+                value={selectedProfile}
                 onChange={handleProfileChange}
                 className="w-full p-2 border border-gray-300 rounded-lg">
                     {profiles.map((profile: any) => (

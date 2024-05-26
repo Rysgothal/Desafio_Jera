@@ -297,29 +297,24 @@ class moviesController {
     getInfoProfile = async (req, res) => {
         const idProfile = req.params.idProfile;
         const idAccount = req.params.idAccount;
+        
+        if (!this.checkAccountAlreadyExistis(idAccount)) {
+            console.log("A conta não existe...");
+
+            res.status(404).json({
+                message: "A conta não existe...",
+                code: 404
+            }).end();
+
+            return;
+        };
 
         this.profileTable
-            .findOne({ where: { idAccount: idAccount} })
-            .then((account) => {
-                if (account === null) {
-                    console.log("Conta não encontrada...");
+            .findOne({ where: { idAccount: idAccount, id: idProfile} })
+            .then((profile) => {
+                console.log("Perfil encontrado com sucesso...");
 
-                    res.status(404).json({
-                        message: "Conta não encontrada...",
-                        code: 404
-                    }).end();
-
-                    return;
-                };
-
-                const profile = account.profiles[idProfile];
-                console.log("Perfil encontrado com sucesso...", profile);
-
-                res.status(200).json({
-                    message: "Perfil encontrado com sucesso...",
-                    code: 200,
-                    profile: profile
-                }).end();
+                res.status(200).json({ profile }).end();
             })
             .catch((error) => {
                 console.log("Inconsistência ao listar perfil...", error);
