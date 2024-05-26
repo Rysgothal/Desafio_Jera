@@ -4,11 +4,11 @@ import React, { useEffect } from "react";
 
 export default function EditProfileForm () {
     const router = useRouter();
-    const param = new URLSearchParams(window.location.search);
-    const data = param.get("json");
-    const json = JSON.parse(data as string);
 
     useEffect(() => {
+        const param = new URLSearchParams(window.location.search);
+        const json = JSON.parse(decodeURIComponent(param.get("data") as string));
+        
         const inputProfileName = document.querySelector('input[name="profileName"]') as HTMLInputElement;
         inputProfileName.value = json.profileName;
 
@@ -19,13 +19,14 @@ export default function EditProfileForm () {
     async function editProfile(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
 
+        const param = new URLSearchParams(window.location.search);
+        const json = JSON.parse(decodeURIComponent(param.get("data") as string));
+
         const editedProfile = {
             profileName: e.currentTarget.profileName.value,
             mainProfile: e.currentTarget.mainProfile.value === "on" ? true : false,
-            idProfile: json.id
+            id: json.id
         };
-
-        console.log(editedProfile);
 
         const response = await fetch("http://18.219.160.242:3050/profile/edit", {
             method: "POST",
@@ -39,7 +40,7 @@ export default function EditProfileForm () {
 
         if (response.ok) {
             console.log(data);
-            router.push(`select-profile?id=${data.idAccount}`);
+            router.push(`profile-select?id=${json.idAccount}`);
         } else {
             alert(data.message);
         };

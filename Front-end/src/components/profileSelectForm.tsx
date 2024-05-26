@@ -14,8 +14,8 @@ export default function ProfileSelectForm () {
         e.preventDefault();
         const element = document.getElementById('profile') as HTMLSelectElement;
         const selectedProfile = profiles.find(profile => profile.id === Number(element.value));
-        router.push(`/edit-profile?json=${JSON.stringify(selectedProfile)}`);
-        
+        const json = JSON.stringify(selectedProfile);
+        router.push(`/edit-profile?data=${encodeURIComponent(json)}`);
     });
 
     const addProfile = ((e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

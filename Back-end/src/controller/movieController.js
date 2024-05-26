@@ -274,8 +274,8 @@ class moviesController {
             return;
         };
 
-        this.profileTable
-            .update({ id: editedProfile.id }, editedProfile)
+        await this.profileTable
+            .update(editedProfile.id, editedProfile)
             .then((profile) => {
                 console.log("Perfil editado com sucesso...", profile);
 
