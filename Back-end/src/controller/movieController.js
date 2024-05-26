@@ -43,6 +43,7 @@ class moviesController {
 
     getReqBodyToProfileJSON = (body) => {
         const profileJSON = {
+            id: body.id,
             profileName: body.profileName,
             idAccount: body.idAccount,
             mainProfile: body.mainProfile,
@@ -249,6 +250,7 @@ class moviesController {
 
     editProfile = async (req, res) => {
         const editedProfile = this.getReqBodyToProfileJSON(req.body);
+        const profile = await this.profileTable.findOne({ where: { id: editedProfile.id } });
 
         if (!this.checkAccountAlreadyExistis(editedProfile.idAccount)) {
             console.log("A conta não existe...");
@@ -261,7 +263,7 @@ class moviesController {
             return;
         };
 
-        if (editedProfile.mainProfile && await this.profileTable.findOne({ where: { mainProfile: true } }) !== null) {
+        if (editedProfile.mainProfile && !profile.mainProfile && await this.profileTable.findOne({ where: { mainProfile: true } }) !== null) {
             console.log("Perfil principal já existe...");
 
             res.status(404).json({
@@ -273,7 +275,7 @@ class moviesController {
         };
 
         this.profileTable
-            .update({ idAccount: editedProfile.idAccount }, editedProfile)
+            .update({ id: editedProfile.id }, editedProfile)
             .then((profile) => {
                 console.log("Perfil editado com sucesso...", profile);
 
@@ -288,39 +290,6 @@ class moviesController {
 
                 res.status(404).json({
                     message: "Inconsistência ao editar perfil...",
-                    code: 404,
-                    error: error
-                }).end();
-            });
-    };
-
-    getInfoProfile = async (req, res) => {
-        const idProfile = req.params.idProfile;
-        const idAccount = req.params.idAccount;
-        
-        if (!this.checkAccountAlreadyExistis(idAccount)) {
-            console.log("A conta não existe...");
-
-            res.status(404).json({
-                message: "A conta não existe...",
-                code: 404
-            }).end();
-
-            return;
-        };
-
-        this.profileTable
-            .findOne({ where: { idAccount: idAccount, id: idProfile} })
-            .then((profile) => {
-                console.log("Perfil encontrado com sucesso...");
-
-                res.status(200).json({ profile }).end();
-            })
-            .catch((error) => {
-                console.log("Inconsistência ao listar perfil...", error);
-
-                res.status(404).json({
-                    message: "Inconsistência ao listar perfil...",
                     code: 404,
                     error: error
                 }).end();
