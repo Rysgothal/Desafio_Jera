@@ -250,7 +250,7 @@ class moviesController {
 
     editProfile = async (req, res) => {
         const editedProfile = this.getReqBodyToProfileJSON(req.body);
-        const profile = await this.profileTable.findOne({ where: { id: editedProfile.id } });
+        const oldProfile = await this.profileTable.findOne({ where: { id: editedProfile.id } });
 
         if (!this.checkAccountAlreadyExistis(editedProfile.idAccount)) {
             console.log("A conta não existe...");
@@ -263,19 +263,33 @@ class moviesController {
             return;
         };
 
-        if (editedProfile.mainProfile && !profile.mainProfile && await this.profileTable.findOne({ where: { mainProfile: true } }) !== null) {
-            console.log("Perfil principal já existe...");
+        if (editedProfile.mainProfile) {
+            const alreadyExists = await this.profileTable
+                .find({ where: { idAccount: editedProfile.idAccount } })
+                .then((profiles) => {
+                    for (let profile of profiles) {
+                        if ((profile.id === oldProfile.id) || (!profile.mainProfile)) {
+                            continue;
+                        };
+                        
+                        return true;
+                    };
+                });
+                
+            if ( alreadyExists ) {
+                console.log("Perfil principal já existe...");
 
-            res.status(404).json({
-                message: "Perfil principal já existe...",
-                code: 404
-            }).end();
+                res.status(404).json({
+                    message: "Perfil principal já existe...",
+                    code: 404
+                }).end();
 
-            return;
+                return;
+            }
         };
 
         await this.profileTable
-            .update(editedProfile.id, editedProfile)
+            .update(oldProfile, editedProfile)
             .then((profile) => {
                 console.log("Perfil editado com sucesso...", profile);
 
