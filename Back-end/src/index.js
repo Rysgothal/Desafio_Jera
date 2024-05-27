@@ -1,5 +1,5 @@
 
-const { movieRouter } = require('./routers/movieRouter.js'); 
+const { Router } = require('./routers/movieRouter.js'); 
 const { database } = require('./database/database.js');
 const express = require('express');
 const cors = require('cors');
@@ -9,7 +9,7 @@ const port = 3050;
 
 app.use(express.json());
 app.use(cors());
-app.use('/', movieRouter);
+app.use('/', Router);
 
 app.get('/', (req, res) => {
     res.send({
@@ -19,6 +19,6 @@ app.get('/', (req, res) => {
 });
 
 app.listen(port, async () => {
-    console.log(`API online => http://18.219.160.242:${port}`);
+    console.log(`API online => http://localhost:${port}`);
     await database().init();
 });

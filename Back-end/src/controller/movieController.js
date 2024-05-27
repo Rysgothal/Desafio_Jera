@@ -309,6 +309,57 @@ class moviesController {
                 }).end();
             });
     };
+
+    removeProfile = async (req, res) => {
+        const idProfile = req.params.idProfile;
+        const profile = await this.profileTable.findOne({ where: { id: idProfile } });
+      
+        if (profile === null) {
+            console.log("Perfil não encontrado...");
+
+            res.status(404).json({
+                message: "Perfil não encontrado...",
+                code: 404
+            }).end();
+
+            return;
+        };
+
+        const lastProfile = await this.profileTable
+            .find({ where: { idAccount: profile.idAccount } })
+            .then((accounts) => { return accounts.length === 1 });
+
+        if (lastProfile) {
+            console.log("Não é possível remover o último perfil...");
+
+            res.status(404).json({
+                message: "Não é possível remover o último perfil...",
+                code: 404
+            }).end();
+
+            return;
+        };
+
+        this.profileTable
+            .remove(profile)
+            .then(() => {
+                    console.log("Perfil removido com sucesso...");
+
+                    res.status(200).json({
+                        message: "Perfil removido com sucesso...",
+                        code: 200
+                    }).end();
+            })
+            .catch((error) => {
+                console.log("Inconsistência ao remover perfil...", error);
+    
+                res.status(404).json({
+                    message: "Inconsistência ao remover perfil...",
+                    code: 404,
+                    error: error
+                }).end();
+            });
+    };
 };
 
 module.exports = {

@@ -4,6 +4,11 @@ import { useRouter } from "next/navigation";
 export default function AddProfileForm () {
     const router = useRouter();
 
+    const goBack = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        router.back();
+    };
+
     async function addProfile(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         const params = new URLSearchParams(window.location.search);
@@ -15,7 +20,12 @@ export default function AddProfileForm () {
             mainProfile: e.currentTarget.mainProfile.checked
         };
 
-        const response = await fetch("http://18.219.160.242:3050/profile/create", {
+        if (newProfile.profileName === '') {
+            alert('Por favor, insira ao menos 1 caracter!');
+            return;
+        }
+
+        const response = await fetch("http://localhost:3050/profile/create", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"
@@ -30,6 +40,7 @@ export default function AddProfileForm () {
             router.push(`profile-select?id=${id}`);
         } else {
             alert(data.message);
+            router.back();
         };
     };
   
@@ -45,6 +56,10 @@ export default function AddProfileForm () {
             <div className="w-96 max-w-full flex flex-col py-2">
                 <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Adicionar
+                </button>
+                <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={goBack}>
+                    Voltar
                 </button>
             </div>
         </form>

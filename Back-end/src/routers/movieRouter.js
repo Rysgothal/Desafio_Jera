@@ -1,15 +1,21 @@
 const express = require('express');
 const { moviesController } = require('../controller/movieController.js');
+const { theMovieDB } = require('../controller/theMovieDBController.js');
 
-const movieRouter = express.Router();
-const movies = new moviesController();
+const Router = express.Router();
+const movieController = new moviesController();
+const movieDB = new theMovieDB();
 
-movieRouter.post('/account/create', movies.createAccount);
-movieRouter.post('/account/login', movies.userLogin);
-movieRouter.post('/profile/create', movies.createProfile);
-movieRouter.get('/:idAccount/list-profiles', movies.getListProfiles);
-movieRouter.post('/profile/edit', movies.editProfile);
+Router.post('/account/create', movieController.createAccount);
+Router.post('/account/login', movieController.userLogin);
+Router.post('/profile/create', movieController.createProfile);
+Router.get('/:idAccount/list-profiles', movieController.getListProfiles);
+Router.post('/profile/edit', movieController.editProfile);
+Router.delete('/profile/delete/:idProfile', movieController.removeProfile);
+
+Router.get('/movies/list/:query', movieDB.getSearchMovie);
+Router.get('/movies', movieDB.getListMovies);
 
 module.exports = {
-    movieRouter
+    Router
 };

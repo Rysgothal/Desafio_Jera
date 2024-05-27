@@ -24,11 +24,11 @@ export default function EditProfileForm () {
 
         const editedProfile = {
             profileName: e.currentTarget.profileName.value,
-            mainProfile: e.currentTarget.mainProfile.value === "on" ? true : false,
+            mainProfile: e.currentTarget.mainProfile.checked,
             id: json.id
         };
 
-        const response = await fetch("http://18.219.160.242:3050/profile/edit", {
+        const response = await fetch("http://localhost:3050/profile/edit", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"
@@ -46,6 +46,25 @@ export default function EditProfileForm () {
         };
     };
   
+    const deleteProfile = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        const param = new URLSearchParams(window.location.search);
+        const json = JSON.parse(decodeURIComponent(param.get("data") as string));
+
+        const response = await fetch(`http://localhost:3050/profile/delete/${json.id}`, {
+            method: "DELETE"
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            console.log(data);
+        } else {
+            alert(data.message);
+        };
+        
+        router.back();
+    };
+
     return (
         <form
             onSubmit={editProfile} 
@@ -64,9 +83,13 @@ export default function EditProfileForm () {
                     />
                 <label htmlFor="perfilPrincipal">Perfil principal</label>
             </div>
-            <div className="w-96 max-w-full flex flex-col py-2">
+            <div className="w-96 max-w-full flex flex-col py-2 gap-2">
                 <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                     Confirmar
+                </button>
+                <button type="button" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    onClick={deleteProfile}>
+                    Deletar
                 </button>
             </div>
         </form>
