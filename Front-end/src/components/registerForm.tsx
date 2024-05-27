@@ -30,7 +30,9 @@ export default function RegisterForm() {
             const account = data.account;
             router.push(`/profile-select?id=${account.id}`);
         } else {
-            alert(data);
+            const jsonData = JSON.stringify(data);
+            const errorMessage = JSON.parse(jsonData).message;
+            alert(errorMessage);
         };
     };
 
