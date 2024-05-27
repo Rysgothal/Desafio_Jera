@@ -12,6 +12,11 @@ export default function LoginForm() {
             password: e.currentTarget.password.value
         };
 
+        if (userLogin.email === '' || userLogin.password === '') {
+            alert('Por favor, preencha todos os campos!');
+            return;
+        };
+
         const response = await fetch("http://18.219.160.242:3050/account/login", {
             method: "POST",
             headers: {
@@ -19,14 +24,15 @@ export default function LoginForm() {
             },
             body: JSON.stringify(userLogin)
         });
-
+        
         const data = await response.json();
+        const jsonData = JSON.stringify(data);
 
         if (response.ok) {
-            const account = data.account;
-            router.push(`/profile-select?id=${account.id}`);
+            router.push(`/profile-select?id=${data.account.id}`);
         } else {
-            alert(data);
+            const errorMessage = JSON.parse(jsonData).message;
+            alert(errorMessage);
         };
     };
      
