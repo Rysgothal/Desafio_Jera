@@ -25,7 +25,7 @@ export default function AddProfileForm () {
             return;
         }
 
-        const response = await fetch("http://localhost:3050/profile/create", {
+        const response = await fetch("http://18.219.160.242:3050/profile/create", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"

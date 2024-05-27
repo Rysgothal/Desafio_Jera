@@ -15,7 +15,7 @@ export default function WelcomeForm() {
     };   
     
     useEffect(() => {
-        fetch(`http://localhost:3050/movies`)
+        fetch(`http://18.219.160.242:3050/movies`)
             .then(response => response.json())
             .then(data => setMovies(data.results));
     }, []);

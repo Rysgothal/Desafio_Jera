@@ -24,7 +24,7 @@ export default function ProfileSelectForm () {
     });
 
     useEffect(() => {
-        fetch(`http://localhost:3050/${idAccount}/list-profiles`)
+        fetch(`http://18.219.160.242:3050/${idAccount}/list-profiles`)
         .then(async response => {
             const data = await response.json();
             setProfiles(data.profiles);

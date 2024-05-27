@@ -28,7 +28,7 @@ export default function EditProfileForm () {
             id: json.id
         };
 
-        const response = await fetch("http://localhost:3050/profile/edit", {
+        const response = await fetch("http://18.219.160.242:3050/profile/edit", {
             method: "POST",
             headers: {
             "Content-Type": "application/json"
@@ -50,7 +50,7 @@ export default function EditProfileForm () {
         const param = new URLSearchParams(window.location.search);
         const json = JSON.parse(decodeURIComponent(param.get("data") as string));
 
-        const response = await fetch(`http://localhost:3050/profile/delete/${json.id}`, {
+        const response = await fetch(`http://18.219.160.242:3050/profile/delete/${json.id}`, {
             method: "DELETE"
         });
 

@@ -15,7 +15,7 @@ export default function SearchMoviesForm() {
         const param = new URLSearchParams(window.location.search);
         const name = param.get('name');
         
-        fetch(`http://localhost:3050/movies/list/${name}`)
+        fetch(`http://18.219.160.242:3050/movies/list/${name}`)
             .then(response => response.json())
             .then(data => setMovies(data.results));
 
