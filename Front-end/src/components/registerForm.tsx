@@ -30,7 +30,7 @@ export default function RegisterForm() {
             const account = data.account;
             router.push(`/profile-select?id=${account.id}`);
         } else {
-            console.error(data);
+            alert(data);
         };
     };
 

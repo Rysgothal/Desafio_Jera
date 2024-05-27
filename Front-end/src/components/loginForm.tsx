@@ -23,11 +23,10 @@ export default function LoginForm() {
         const data = await response.json();
 
         if (response.ok) {
-            console.log(data);
             const account = data.account;
             router.push(`/profile-select?id=${account.id}`);
         } else {
-            console.error(data);
+            alert(data);
         };
     };
      
